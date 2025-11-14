@@ -8,7 +8,7 @@
       </button>
     </div>
 
-    <!-- Si está cargando -->
+    <!-- Loading -->
     <LoadingSpinner v-if="loading" />
 
     <!-- Lista de productos -->
@@ -43,9 +43,6 @@ import {
   deleteProduct,
 } from "../services/api.js";
 
-import { gymProducts } from "../data/gymProducts.js";
-
-
 import ProductCardComponent from "../components/ProductCardComponent.vue";
 import ProductModal from "../components/ProductModal.vue";
 import LoadingSpinner from "../components/LoadingSpinner.vue";
@@ -66,56 +63,38 @@ export default {
   },
 
   methods: {
-    // 🔥 Cargar productos + reemplazar por WichoFit
+    // 🔥 Cargar productos desde API local simulada
     async cargarProductos() {
       this.loading = true;
-
-      const raw = await getProducts();
-
-      // 🔥 Mezcla FakeStore + WichoFit (solo apariencia)
-      this.productos = raw.map((p, i) => ({
-        ...p,
-        title: gymProducts[i]?.title || p.title,
-        description: gymProducts[i]?.description || p.description,
-        image: gymProducts[i]?.image || p.image,
-        category: "WichoFit Gym",
-      }));
-
+      this.productos = await getProducts();
       this.loading = false;
     },
 
-    // Abrir modal para editar
     abrirProducto(p) {
-      this.productoSeleccionado = p;
+      this.productoSeleccionado = { ...p }; // evitar mutación directa
       this.$refs.modal.show();
     },
 
-    // Abrir modal para crear
     nuevoProducto() {
       this.productoSeleccionado = null;
       this.$refs.modal.show();
     },
 
-    // Guardar nuevo o editado
     async guardarProducto(data) {
       if (this.productoSeleccionado) {
+        // EDITAR
         await updateProduct(this.productoSeleccionado.id, data);
       } else {
+        // CREAR
         await createProduct(data);
       }
       await this.cargarProductos();
     },
 
-    // Eliminar producto
     async eliminarProducto(producto) {
       if (!confirm(`¿Seguro que deseas eliminar "${producto.title}"?`)) return;
 
-      try {
-        await deleteProduct(producto.id);
-      } catch (e) {
-        alert("FakeStore API no elimina realmente, pero simulamos la eliminación.");
-      }
-
+      await deleteProduct(producto.id);
       await this.cargarProductos();
     },
 

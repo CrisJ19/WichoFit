@@ -1,11 +1,19 @@
 <template>
-  <div class="d-flex">
-    <SidebarComponent :visible="sidebarVisible" @report="generateReport"/>
-    <div class="flex-fill d-flex flex-column min-vh-100">
-      <NavbarComponent :userName="user.name" @toggle-sidebar="toggleSidebar"/>
-      <main class="p-4">
+  <div class="d-flex dashboard-container">
+    <!-- Sidebar -->
+    <SidebarComponent :visible="sidebarVisible" @report="generateReport" />
+
+    <!-- Contenedor principal -->
+    <div class="flex-fill d-flex flex-column">
+      <!-- Navbar -->
+      <NavbarComponent :userName="user.name" @toggle-sidebar="toggleSidebar" />
+
+      <!-- Contenido de vistas -->
+      <main class="p-4 flex-grow-1 overflow-auto">
         <router-view />
       </main>
+
+      <!-- Footer -->
       <FooterComponent />
     </div>
   </div>
@@ -18,18 +26,33 @@ import FooterComponent from '../components/FooterComponent.vue'
 
 export default {
   components: { SidebarComponent, NavbarComponent, FooterComponent },
-  data(){ return { sidebarVisible: true, user: { name: 'Usuario' } } },
+
+  data() {
+    return {
+      sidebarVisible: true,
+      user: { name: 'Usuario' },
+    }
+  },
+
   mounted() {
     const u = sessionStorage.getItem('wichofit_user')
-    if(u) this.user = JSON.parse(u)
+    if (u) this.user = JSON.parse(u)
   },
-  methods:{
-    toggleSidebar(){ this.sidebarVisible = !this.sidebarVisible },
-    generateReport(){ alert('Función de reporte (placeholder).') }
-  }
+
+  methods: {
+    toggleSidebar() {
+      this.sidebarVisible = !this.sidebarVisible
+    },
+
+    generateReport() {
+      alert('Función de reporte (placeholder).')
+    },
+  },
 }
 </script>
 
 <style scoped>
-.min-vh-100 { min-height: 100vh; }
+.min-vh-100 {
+  min-height: 100vh;
+}
 </style>

@@ -1,6 +1,13 @@
 <template>
   <div class="card card-wicho p-3 h-100 d-flex flex-column">
-    <img :src="product.image" class="product-image mx-auto" :alt="product.title" />
+
+    <!-- Imagen con fallback si falla -->
+    <img
+      :src="validImage"
+      class="product-image mx-auto"
+      :alt="product?.title || 'Producto'"
+      @error="imageError"
+    />
 
     <div class="mt-3 d-flex flex-column flex-fill">
       <h6 class="mb-1">{{ shortTitle }}</h6>
@@ -26,6 +33,12 @@
 <script>
 export default {
   props: ['product'],
+  data() {
+    return {
+      fallbackImage: '/assets/no_image.png', // pon un placeholder en /public/assets/
+      validImage: this.product?.image || '/assets/no_image.png'
+    }
+  },
   computed: {
     shortTitle() {
       if (!this.product?.title) return ''
@@ -34,6 +47,11 @@ export default {
         : this.product.title
     },
   },
+  methods: {
+    imageError() {
+      this.validImage = this.fallbackImage
+    }
+  }
 }
 </script>
 

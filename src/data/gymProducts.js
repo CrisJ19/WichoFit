@@ -2,7 +2,7 @@ export const gymProducts = [
   {
     title: 'Proteína Whey WichoFit 2LB',
     description: 'Suplemento premium para aumentar masa muscular.',
-    image: 'https://m.media-amazon.com/images/I/61M9X6iE3yL._AC_SL1500_.jpg',
+    image: 'hhttps://www.optimumnutrition.com.co/producto/gold-standard-100-whey/',
   },
   {
     title: 'Creatina Monohidratada WichoFit',

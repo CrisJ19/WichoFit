@@ -1,41 +1,43 @@
-const API_URL = 'https://fakestoreapi.com'
+// 📌 api.js — API simulada local
 
-// Obtener TODOS los productos
+import { gymProducts } from "../data/gymProducts.js";
+
+let products = [...gymProducts]; // copia editable
+
+// 🔵 Obtener TODOS los productos
 export async function getProducts() {
-  const res = await fetch(`${API_URL}/products`)
-  return await res.json()
+  return Promise.resolve(products);
 }
 
-// Obtener UN producto por ID
+// 🔵 Obtener producto por ID
 export async function getProduct(id) {
-  const res = await fetch(`${API_URL}/products/${id}`)
-  return await res.json()
+  return Promise.resolve(products.find(p => p.id === id));
 }
 
-// Crear un producto
+// 🔵 Crear producto
 export async function createProduct(product) {
-  const res = await fetch(`${API_URL}/products`, {
-    method: 'POST',
-    body: JSON.stringify(product),
-    headers: { 'Content-Type': 'application/json' },
-  })
-  return await res.json()
+  const newProduct = {
+    ...product,
+    id: Date.now(), // ID único
+  };
+
+  products.push(newProduct);
+
+  return Promise.resolve(newProduct);
 }
 
-// Actualizar un producto
-export async function updateProduct(id, product) {
-  const res = await fetch(`${API_URL}/products/${id}`, {
-    method: 'PUT',
-    body: JSON.stringify(product),
-    headers: { 'Content-Type': 'application/json' },
-  })
-  return await res.json()
+// 🔵 Actualizar producto
+export async function updateProduct(id, updated) {
+  const index = products.findIndex(p => p.id === id);
+  if (index !== -1) {
+    products[index] = { ...products[index], ...updated };
+  }
+
+  return Promise.resolve(products[index]);
 }
 
-// Eliminar un producto
+// 🔵 Eliminar producto
 export async function deleteProduct(id) {
-  const res = await fetch(`${API_URL}/products/${id}`, {
-    method: 'DELETE',
-  })
-  return await res.json()
+  products = products.filter(p => p.id !== id);
+  return Promise.resolve({ success: true });
 }

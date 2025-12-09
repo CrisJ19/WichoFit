@@ -1,35 +1,60 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import LoginView from '../views/LoginView.vue'
-import DashboardView from '../views/DashboardView.vue'
-import ProductView from '../views/ProductView.vue'
-import ClientsView from '../views/ClientsView.vue'
+// router/index.js
+import { createRouter, createWebHistory } from "vue-router";
+import LoginView from "../views/LoginView.vue";
+import DashboardView from "../views/DashboardView.vue";
+import UsersView from "../views/UsersView.vue";
+import ProductsView from "../views/ProductView.vue";
 
 const routes = [
-  { path: '/', redirect: '/login' },
-  { path: '/login', component: LoginView, meta: { guest: true } },
   {
-    path: '/dashboard',
+    path: "/login",
+    name: "login",
+    component: LoginView,
+  },
+  {
+    path: "/dashboard",
+    name: "dashboard",
     component: DashboardView,
-    children: [
-      { path: '', redirect: '/dashboard/productos' },
-      { path: 'productos', component: ProductView },
-      { path: 'clientes', component: ClientsView }
-    ],
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/usuarios",
+    name: "usuarios",
+    component: UsersView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/productos",
+    name: "productos",
+    component: ProductsView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    redirect: "/login"
   }
-]
+];
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
-})
+  routes,
+});
 
-// Simple guard (stateful auth could be added later)
+
 router.beforeEach((to, from, next) => {
-  const logged = sessionStorage.getItem('wichofit_user') // set on login
-  if (to.meta.requiresAuth && !logged) return next('/login')
-  if (to.meta.guest && logged) return next('/dashboard')
-  next()
-})
+  const user = sessionStorage.getItem("wichofit_user");
 
-export default router
+
+  if (to.meta.requiresAuth && !user) {
+    return next("/login");
+  }
+
+
+  if (user && to.path === "/login") {
+    return next("/dashboard");
+  }
+
+  next();
+});
+
+export default router;

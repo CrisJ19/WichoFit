@@ -2,7 +2,7 @@
   <div class="container py-4">
     <h2 class="mb-4">Gestión de Usuarios</h2>
 
-    <!-- Botón agregar -->
+    <!-- Botón agregar usuario -->
     <button class="btn btn-primary mb-3" @click="openCreateForm">
       Agregar Usuario
     </button>
@@ -14,7 +14,7 @@
       @delete="confirmDelete"
     />
 
-    <!-- Formulario (crear/editar) -->
+    <!-- Formulario en modal (crear/editar) -->
     <UserForm
       v-if="showForm"
       :editingUser="editingUser"
@@ -22,10 +22,10 @@
       @saved="reloadUsers"
     />
 
-    <!-- Confirmar eliminación -->
+    <!-- Confirmación de eliminación -->
     <ConfirmModal
       v-if="showConfirm"
-      :message="'¿Seguro que deseas eliminar a ' + userToDelete?.nombre + '?'"
+      :message="'¿Seguro que deseas eliminar a ' + (userToDelete?.name || '') + '?'"
       @confirm="deleteUserConfirmed"
       @cancel="showConfirm = false"
     />
@@ -61,12 +61,12 @@ export default {
     },
 
     openCreateForm() {
-      this.editingUser = null;
+      this.editingUser = null;   // modo crear
       this.showForm = true;
     },
 
     openEditForm(user) {
-      this.editingUser = { ...user };
+      this.editingUser = { ...user }; // modo editar
       this.showForm = true;
     },
 

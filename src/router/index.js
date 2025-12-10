@@ -1,9 +1,8 @@
-// router/index.js
 import { createRouter, createWebHistory } from "vue-router";
 import LoginView from "../views/LoginView.vue";
 import DashboardView from "../views/DashboardView.vue";
 import UsersView from "../views/UsersView.vue";
-import ProductsView from "../views/ProductView.vue";
+import ProductsView from "../views/ProductView.vue"; // ← CORREGIDO
 
 const routes = [
   {
@@ -40,21 +39,15 @@ const router = createRouter({
   routes,
 });
 
-
 router.beforeEach((to, from, next) => {
   const user = sessionStorage.getItem("wichofit_user");
 
+  if (to.meta.requiresAuth && !user) return next("/login");
 
-  if (to.meta.requiresAuth && !user) {
-    return next("/login");
-  }
-
-
-  if (user && to.path === "/login") {
-    return next("/dashboard");
-  }
+  if (user && to.path === "/login") return next("/dashboard");
 
   next();
 });
 
 export default router;
+

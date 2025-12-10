@@ -9,7 +9,7 @@
         <div class="card p-4 shadow">
           <h4>Usuarios</h4>
           <p>Crear, editar y eliminar usuarios del sistema.</p>
-          <button class="btn btn-primary" @click="$router.push('/users')">
+          <button class="btn btn-primary" @click="$router.push('/usuarios')">
             Administrar Usuarios
           </button>
         </div>
@@ -20,7 +20,7 @@
         <div class="card p-4 shadow">
           <h4>Productos</h4>
           <p>Gestionar inventario, precios y stock.</p>
-          <button class="btn btn-success" @click="$router.push('/products')">
+          <button class="btn btn-success" @click="$router.push('/productos')">
             Administrar Productos
           </button>
         </div>
@@ -33,3 +33,4 @@
 <script>
 export default {};
 </script>
+

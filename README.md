@@ -1,9 +1,9 @@
-🏋️‍♂️ WichoFit – Sistema Web de Gestión para Gimnasio
+WichoFit – Sistema Web de Gestión para Gimnasio
 
 Aplicación web desarrollada con Vue.js 3 + Bootstrap 5.3
 Segundo Parcial – Desarrollo de Aplicaciones Web
 
-📌 Descripción del Proyecto
+Descripción del Proyecto
 
 WichoFit es una aplicación web modular diseñada para la gestión interna de un gimnasio.
 Incluye autenticación básica, un panel de administración (Dashboard), y un módulo completo de gestión de productos utilizando una API externa.
@@ -22,7 +22,7 @@ Buenas prácticas de desarrollo
 
 Colaboración mediante Git, ramas y Pull Requests
 
-🎨 Paleta de Colores – WichoFit
+ Paleta de Colores – WichoFit
 
 Usamos un estilo moderno basado en tonos energéticos de gimnasio:
 
@@ -36,8 +36,8 @@ Usamos un estilo moderno basado en tonos energéticos de gimnasio:
 
 Integrados como clases personalizadas de Bootstrap para botones, títulos y barras laterales.
 
-🚀 Funcionalidades Principales
-🔐 1. Login con Validación Local
+Funcionalidades Principales
+ 1. Login con Validación Local
 
 Se incluye un archivo usuarios.json con usuarios de prueba.
 La aplicación valida:
@@ -49,7 +49,7 @@ Al iniciar sesión se guarda la sesión en sessionStorage.
 
 ⚠ Nota: Este login es educativo. NO representa un sistema seguro.
 
-📊 2. Dashboard Modular
+ 2. Dashboard Modular
 
 Incluye:
 
@@ -63,7 +63,7 @@ Soporte para rutas hijas (/dashboard/productos, etc.)
 
 El Dashboard se mantiene estable mientras las vistas cambian mediante <router-view>.
 
-🛒 3. Gestión de Productos (CRUD + API externa)
+ 3. Gestión de Productos (CRUD + API externa)
 
 WichoFit consume la API:
 
@@ -88,7 +88,7 @@ Modal de edición/creación (ProductModal)
 
 Spinner de carga (LoadingSpinner)
 
-🧩 4. Componentes Reutilizables
+ 4. Componentes Reutilizables
 ✔ NavbarComponent
 
 Muestra el nombre del usuario logueado.
@@ -142,7 +142,7 @@ export async function getProducts() {
   const res = await fetch('https://fakestoreapi.com/products')
   return res.json()
 }
-🔐 Vista de Login (LoginView)
+Vista de Login (LoginView)
 
 La aplicación incluye una vista de inicio de sesión diseñada únicamente con fines educativos.
 El sistema valida las credenciales del usuario leyendo un archivo local usuarios.json, sin manejar cifrado ni autenticación real.
@@ -165,13 +165,13 @@ Si las credenciales son incorrectas:
 
 Se muestra una alerta Bootstrap usando el componente alert alert-danger.
 
-🧪 Ejemplo del archivo usuarios.json
+ Ejemplo del archivo usuarios.json
 [
   { "username": "admin", "password": "1234", "name": "Administrador" },
   { "username": "user", "password": "abcd", "name": "Usuario Invitado" }
 ]
 
-🖥 Código simplificado del LoginView
+ Código simplificado del LoginView
 <div v-if="alert" class="alert alert-danger" role="alert">
   {{ alert }}
 </div>
@@ -188,14 +188,14 @@ this.productos = raw.map((p, i) => ({
   category: "WichoFit Gym",
 }))
 
-🔧 Comunicación entre Componentes
+ Comunicación entre Componentes
 Props
 <ProductCardComponent :product="p" />
 
 Emisión de eventos
 this.$emit("delete", product)
 
-👥 Trabajo Colaborativo con GitHub
+ Trabajo Colaborativo con GitHub
 
 El repositorio evidencia:
 
@@ -205,13 +205,13 @@ El repositorio evidencia:
 ✔ Convenciones de nombres
 ✔ Corrección de errores en equipo (ej. conflicto de gymProducts.js)
 
-🧪 Usuario de Prueba (para Login)
+ Usuario de Prueba (para Login)
 
 Credenciales sugeridas:
 
 Usuario: admin
 Contraseña: 123456
 
-🧾 Cómo ejecutar el proyecto
+ Cómo ejecutar el proyecto
 npm install
 npm run serve

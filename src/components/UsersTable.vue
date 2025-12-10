@@ -13,6 +13,8 @@
           <th>ID</th>
           <th>Nombre</th>
           <th>Email</th>
+          <th>Documento</th>
+          <th>Fecha Nacimiento</th>
           <th style="width: 180px;">Acciones</th>
         </tr>
       </thead>
@@ -20,8 +22,11 @@
       <tbody>
         <tr v-for="u in users" :key="u.id">
           <td>{{ u.id }}</td>
-          <td>{{ u.nombre }}</td>
+          <td>{{ u.name }}</td>
           <td>{{ u.email }}</td>
+          <td>{{ u.documento }}</td>
+          <td>{{ u.fechaNacimiento }}</td>
+
           <td>
             <button class="btn btn-warning btn-sm me-2" @click="openEdit(u)">
               Editar
@@ -88,4 +93,5 @@ export default {
   },
 };
 </script>
+
 

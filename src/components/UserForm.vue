@@ -9,7 +9,7 @@
         <input
           type="text"
           class="form-control"
-          v-model="localUser.name"
+          v-model="localUser.nombre"
           required
         />
       </div>
@@ -25,24 +25,26 @@
         />
       </div>
 
-      <!-- Password (solo crear) -->
-      <div class="mb-3" v-if="!editingUser">
-        <label class="form-label">Password</label>
+      <!-- Fecha de nacimiento -->
+      <div class="mb-3">
+        <label class="form-label">Fecha de nacimiento</label>
         <input
-          type="password"
+          type="date"
           class="form-control"
-          v-model="localUser.password"
+          v-model="localUser.fechaNacimiento"
           required
         />
       </div>
 
-      <!-- Rol -->
+      <!-- Documento -->
       <div class="mb-3">
-        <label class="form-label">Rol</label>
-        <select class="form-select" v-model="localUser.rol" required>
-          <option value="admin">Admin</option>
-          <option value="usuario">Usuario</option>
-        </select>
+        <label class="form-label">Número de documento</label>
+        <input
+          type="text"
+          class="form-control"
+          v-model="localUser.documento"
+          required
+        />
       </div>
 
       <!-- Botones -->
@@ -64,31 +66,25 @@ export default {
   data() {
     return {
       localUser: {
-        name: "",
+        nombre: "",
         email: "",
-        password: "",
-        rol: "usuario",
+        fechaNacimiento: "",
+        documento: "",
       },
     };
   },
 
   mounted() {
-    // Si viene un usuario para editar → llenar el formulario
     if (this.editingUser) {
-      this.localUser = {
-        ...this.editingUser,
-        password: "", // no se edita password aquí
-      };
+      this.localUser = { ...this.editingUser };
     }
   },
 
   methods: {
     async save() {
       if (this.editingUser) {
-        // EDITAR
         await updateUser(this.editingUser.id, this.localUser);
       } else {
-        // CREAR
         await createUser(this.localUser);
       }
 
@@ -98,5 +94,6 @@ export default {
   },
 };
 </script>
+
 
 

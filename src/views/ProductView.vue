@@ -9,16 +9,11 @@
     </div>
 
     <div class="row">
-      <div
-        class="col-md-4 mb-3"
-        v-for="p in productos"
-        :key="p.id"
-      >
+      <div class="col-md-4 mb-3" v-for="p in productos" :key="p.id">
         <div class="card shadow-sm">
 
-          <!-- Imagen del producto -->
           <img
-            :src="p.image || 'https://via.placeholder.com/300x200?text=Sin+Imagen'"
+            :src="p.image || '/no_image.png'"
             class="card-img-top"
             style="height: 200px; object-fit: cover;"
           />
@@ -33,27 +28,16 @@
             <p><strong>${{ p.price }}</strong></p>
 
             <div class="d-flex justify-content-between">
-              <button
-                class="btn btn-warning btn-sm"
-                @click="editarProducto(p)"
-              >
-                Editar
-              </button>
-
-              <button
-                class="btn btn-danger btn-sm"
-                @click="eliminarProducto(p.id)"
-              >
-                Eliminar
-              </button>
+              <button class="btn btn-warning btn-sm" @click="editarProducto(p)">Editar</button>
+              <button class="btn btn-danger btn-sm" @click="eliminarProducto(p.id)">Eliminar</button>
             </div>
+
           </div>
 
         </div>
       </div>
     </div>
 
-    <!-- Modal -->
     <ProductModal
       ref="productoModal"
       :product="productoEdit"
@@ -89,11 +73,7 @@ export default {
 
   methods: {
     async cargarProductos() {
-      try {
-        this.productos = await getProducts();
-      } catch (e) {
-        console.error("Error cargando productos:", e);
-      }
+      this.productos = await getProducts();
     },
 
     nuevoProducto() {
@@ -102,13 +82,12 @@ export default {
     },
 
     editarProducto(prod) {
-      this.productoEdit = { ...prod }; // evitar modificar reactivo original
+      this.productoEdit = { ...prod };
       this.$refs.productoModal.show();
     },
 
     async eliminarProducto(id) {
       if (!confirm("¿Seguro que deseas eliminar este producto?")) return;
-
       await deleteProduct(id);
       this.cargarProductos();
     },
@@ -117,10 +96,10 @@ export default {
       const cleanProduct = {
         title: data.title,
         description: data.description,
-        price: Number(data.price),
+        price: data.price,
         category: data.category,
         image: data.image,
-        stock: Number(data.stock),
+        stock: data.stock,
         status: data.status,
       };
 
@@ -135,3 +114,4 @@ export default {
   },
 };
 </script>
+
